@@ -1,4 +1,4 @@
-﻿using KSerialization;
+using KSerialization;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -120,8 +120,8 @@ namespace MoveThisHere
             //replacing capacity_control slider in filteredstorage - leave it null and do the logic for it here
             //forbidden tags contains either nothing or pump stations. have to make own copy of filteredstorage just to keep this private field updated
 
-            Subscribe(-905833192, OnCopySettingsDelegate);
-            Subscribe(493375141, OnRefreshUserMenuDelegate);
+            Subscribe((int)GameHashes.CopySettings, OnCopySettingsDelegate);
+            Subscribe((int)GameHashes.RefreshUserMenu, OnRefreshUserMenuDelegate);
 
         }
 
@@ -296,9 +296,9 @@ namespace MoveThisHere
         protected override void OnPrefabInit()
         {
             base.OnPrefabInit();
-            Subscribe(493375141, OnRefreshUserMenuDelegate);
-            Subscribe(-111137758, OnRefreshUserMenuDelegate);
-            Subscribe(-790448070, OnDeconstructDelegate);
+            Subscribe((int)GameHashes.RefreshUserMenu, OnRefreshUserMenuDelegate);
+            Subscribe((int)GameHashes.StatusChange, OnRefreshUserMenuDelegate);
+            Subscribe((int)GameHashes.MarkForDeconstruct, OnDeconstructDelegate);
 
             CellOffset[][] table = OffsetGroups.InvertedStandardTable;
             CellOffset[] filter = null;

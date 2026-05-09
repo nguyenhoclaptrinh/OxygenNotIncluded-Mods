@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using HarmonyLib;
 using KMod;
 using UnityEngine;
@@ -128,23 +128,24 @@ namespace MoveThisHere
 
         private static void AddPlanToCategory(PlanScreen.PlanInfo menu, string subcategory, string idBuilding, string addAfter = null)
         {
-            List<KeyValuePair<string, string>> data = menu.buildingAndSubcategoryData;
+            var data = menu.buildingAndSubcategoryData;
             if (data != null)
             {
+                var item = new KeyValuePair<string, string>(idBuilding, subcategory);
                 if (addAfter == null)
                 {
-                    data.Add(new KeyValuePair<string, string>(idBuilding, subcategory));
+                    data.Add(item);
                 }
                 else
                 {
-                    int index = data.IndexOf(new KeyValuePair<string, string>(addAfter, subcategory));
+                    int index = data.FindIndex(x => x.Key == addAfter);
                     if (index == -1)
                     {
-                        Debug.Log($"Could not find building {subcategory}/{addAfter} to add {idBuilding} after. Adding at the end !");
-                        data.Add(new KeyValuePair<string, string>(idBuilding, subcategory));
+                        Debug.Log($"Could not find building {addAfter} in category {menu.category} to add {idBuilding} after. Adding at the end!");
+                        data.Add(item);
                         return;
                     }
-                    data.Insert(index + 1, new KeyValuePair<string, string>(idBuilding, subcategory));
+                    data.Insert(index + 1, item);
                 }
             }
         }
